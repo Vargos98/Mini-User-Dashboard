@@ -29,4 +29,4 @@ services:
 
 databases:
   - name: runboard-db
-    plan: basic-256mb
+    plan: free
