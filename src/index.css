@@ -1,3 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root,
+html.dark {
+  --ink: 13 13 13;
+  --ink-muted: 17 17 17;
+  --ink-card: 20 20 20;
+  --ink-border: 42 42 42;
+  --fg: 255 255 255;
+  --fg-muted: 232 228 222;
+  --fg-subtle: 154 149 144;
+  --fg-faint: 90 86 82;
+  --grid-line: 255 255 255;
+  --grid-alpha: 0.04;
+  --ember: 254 50 10;
+  --ember-2: 255 92 11;
+  --ember-soft: 255 177 0;
+}
+
+html.light {
+  --ink: 239 234 227;
+  --ink-muted: 255 255 255;
+  --ink-card: 255 255 255;
+  --ink-border: 229 221 212;
+  --fg: 13 13 13;
+  --fg-muted: 45 45 45;
+  --fg-subtle: 90 86 82;
+  --fg-faint: 154 149 144;
+  --grid-line: 13 13 13;
+  --grid-alpha: 0.06;
+  --ember: 254 50 10;
+  --ember-2: 255 92 11;
+  --ember-soft: 204 90 8;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    min-height: 100%;
+  }
+
+  body {
+    @apply bg-ink font-sans text-fg antialiased transition-colors duration-300;
+  }
+
+  ::selection {
+    background: rgb(var(--ember) / 0.88);
+    color: #fff;
+  }
+
+  input,
+  select,
+  button {
+    font-family: inherit;
+  }
+}
+
+@layer components {
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgb(var(--grid-line) / var(--grid-alpha)) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--grid-line) / var(--grid-alpha)) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .chart-plot {
+    animation: chart-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
+@keyframes chart-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chart-plot {
+    animation: none;
+  }
+
+  .theme-thumb {
+    transition: none !important;
+  }
+}

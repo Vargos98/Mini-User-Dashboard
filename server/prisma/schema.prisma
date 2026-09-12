@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime @default(now())
+}
+
+model Project {
+  id        String     @id @default(cuid())
+  name      String
+  key       String     @unique
+  createdAt DateTime   @default(now())
+  plans     TestPlan[]
+}
+
+model TestPlan {
+  id        String    @id @default(cuid())
+  name      String
+  projectId String
+  createdAt DateTime  @default(now())
+  project   Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  runs      TestRun[]
+
+  @@index([projectId])
+}
+
+model TestRun {
+  id          String           @id @default(cuid())
+  code        String           @unique
+  planId      String
+  status      String
+  startedAt   DateTime
+  durationMs  Int?
+  triggeredBy String
+  createdAt   DateTime         @default(now())
+  plan        TestPlan         @relation(fields: [planId], references: [id], onDelete: Cascade)
+  results     TestCaseResult[]
+
+  @@index([startedAt])
+  @@index([status])
+  @@index([planId])
+}
+
+model TestCaseResult {
+  id         String   @id @default(cuid())
+  runId      String
+  name       String
+  status     String
+  durationMs Int
+  run        TestRun  @relation(fields: [runId], references: [id], onDelete: Cascade)
+
+  @@index([runId])
+  @@index([status])
+}
