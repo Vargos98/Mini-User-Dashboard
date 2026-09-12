@@ -161,8 +161,8 @@ Small enough to aggregate, not a QA platform.
 
 Same split as Fiesta:
 
-- Frontend → Vercel (`VITE_API_URL` = public API origin)
-- API + Postgres → Render
+- Frontend → Vercel (`https://runboard-bice.vercel.app`, `VITE_API_URL` = public API origin)
+- API + Postgres → Render (`https://runboard-api.onrender.com`)
   - `DATABASE_URL` = Postgres
   - `CLIENT_ORIGIN` = Vercel URL
   - `CROSS_SITE_COOKIES=true`
